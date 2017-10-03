@@ -34,8 +34,6 @@ ch.setLevel(logging.DEBUG)
 logger.addHandler(ch)
 
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
-REPO = os.environ['REPO']
-ISSUES_FOR_REPO_URL = 'https://api.github.com/repos/%s/issues' % REPO
 SYNAPSE_USERNAME = os.environ['SYNAPSE_USERNAME']
 SYNAPSE_API_KEY = os.environ['SYNAPSE_API_KEY']
 
@@ -101,7 +99,7 @@ def next_page(response):
 
     return None
 
-def process(csvout, url=ISSUES_FOR_REPO_URL):
+def process(csvout, url):
     resp = get_issues(url)
     write_issues(resp, csvout)
     next_ = next_page(resp)
@@ -116,6 +114,9 @@ def issues_to_table_handler(event, context):
 
     table_id = event['table_id']
 
+    repo = event['repo']
+    issues_url = 'https://api.github.com/repos/%s/issues' % repo
+
     syn = synapseclient.login(email=SYNAPSE_USERNAME,
                               apiKey=SYNAPSE_API_KEY,
                               silent=True)
@@ -123,7 +124,7 @@ def issues_to_table_handler(event, context):
     tmpfile = tempfile.NamedTemporaryFile(suffix=".csv")
     csvout = csv.writer(tmpfile)
     csvout.writerow(('id', 'Title', 'Labels', 'Created At', 'Updated At', 'URL', 'Milestone'))
-    process(csvout)
+    process(csvout, url=issues_url)
     tmpfile.flush()
 
     logger.debug("Wrote to %s" % tmpfile.name)
