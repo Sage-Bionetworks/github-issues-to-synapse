@@ -1,2 +1,2 @@
-# github-issues-to-synapse
-Write open Github issues to a Synapse table
+# AWS Lambda - Github issues to Synapse
+Write open Github issues to a Synapse table on AWS Lambda.
