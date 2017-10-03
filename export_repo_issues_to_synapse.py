@@ -139,5 +139,21 @@ def issues_to_table_handler(event, context):
 
     return {'message': "Stored issues to table %s" % (table_id, )}
 
+def main():
+
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--table_id", type=str)
+    parser.add_argument("repo", type=str)
+
+    args = parser.parse_args()
+
+    event = {"table_id": args.table_id, "repo": args.repo}
+
+    message = issues_to_table_handler(event=event, context=None)
+
+    logger.info(message)
+
 if __name__ == "__main__":
-    issues_to_table_handler(None, None)
+    main()
