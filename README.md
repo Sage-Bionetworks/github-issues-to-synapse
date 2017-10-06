@@ -39,9 +39,10 @@ aws lambda update-function-code --function-name IssuesToSynapse --s3-bucket my-b
 
 ## Creating the Synapse table
 
-A Synapse table with the following schema is required to exist:
+A Synapse table that uses the following column IDs is required to exist:
 
 ```
+['1415', '4372', '60818', '60819', '60852', '60853', '61041']
 ```
 
 ## Triggering the function
