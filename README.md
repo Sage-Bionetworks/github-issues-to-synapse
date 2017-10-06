@@ -36,3 +36,20 @@ Modifications to the code require re-creating the zip file, uploading to the S3 
 ```
 aws lambda update-function-code --function-name IssuesToSynapse --s3-bucket my-bucket-for-lambda --s3-key export_repo_issues_to_synapse.zip
 ```
+
+## Creating the Synapse table
+
+A Synapse table with the following schema is required to exist:
+
+```
+```
+
+## Triggering the function
+
+The Lambda function requires an event of the following format:
+
+```
+ { "table_id": "syn123456", "repo": "myusername/myreponame"}
+```
+
+Where the `table_id` is the same as the one created above, and the `repo` is the repository from which to get the issues.
