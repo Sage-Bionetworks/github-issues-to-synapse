@@ -83,3 +83,5 @@ The Lambda function requires an event of the following format:
 ```
 
 Where the `table_id` is the same as the one created above, and the `repo` is the repository from which to get the issues.
+
+The Lambda function can be triggered by issue events from Github. Set up an SNS or SQS integration for the repository you want to watch. Note that you need to add `issue` events to the hook manually - see this [API documentation page](https://developer.github.com/v3/repos/hooks/#edit-a-hook) for how to edit a hook.
